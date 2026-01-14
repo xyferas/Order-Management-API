@@ -50,6 +50,7 @@ Base URL: `http://127.0.0.1:8000/`
 | Feature | Method | Endpoint | Description |
 | :--- | :--- | :--- | :--- |
 | **Register** | `POST` | `/api/register/` | Register as a new Customer. |
+| **Admin Login** | `POST` | `/api/login/` | Obtain Admin Access & Refresh Tokens. |
 | **Login** | `POST` | `/api/login/` | Obtain Access & Refresh Tokens. |
 | **Refresh Token** | `POST` | `/api/token/refresh/` | Refresh Access Token. |
 
@@ -80,6 +81,22 @@ Base URL: `http://127.0.0.1:8000/`
     "refresh": "eyJhbGciOiJIUzI1NiIsIn...",
     "access": "eyJhbGciOiJIUzI1NiIsIn...",
     "role": "CUSTOMER"
+}
+```
+
+**Admin Login Payload:**
+```json
+{
+    "username": "admin",
+    "password": "AdminPassword123!"
+}
+```
+**Admin Login Response:**
+```json
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsIn...",
+    "access": "eyJhbGciOiJIUzI1NiIsIn...",
+    "role": "ADMIN"
 }
 ```
 
