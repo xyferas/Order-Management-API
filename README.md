@@ -12,6 +12,10 @@ A robust Order Management API built with Django and Django REST Framework.
 ## Setup Instructions
 
 1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/xyferas/Order-Management-API.git
+    cd Order-Management-API
+    ```
 2.  **Create and Activate Virtual Environment (If Needed)**
     ```bash
     python -m venv env
@@ -26,7 +30,7 @@ A robust Order Management API built with Django and Django REST Framework.
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Apply Migrations (If Needed)**
+4.  **Apply Migrations**
     ```bash
     cd order_management
     python manage.py makemigrations
@@ -109,8 +113,9 @@ _Requires `Bearer <admin_token>`_
 | Feature | Method | Endpoint | Description |
 | :--- | :--- | :--- | :--- |
 | **Create Product** | `POST` | `/api/products/` | Add a new product to the catalog. |
+| **List Products** | `GET` | `/api/products/` | View all products. |
 | **Update Product** | `PUT/PATCH` | `/api/products/<id>/` | Update product details. |
-| **Delete Product** | `DELETE` | `/api/products/<id>/` | Remove a product. |
+| **Delete Product** | `DELETE` | `/api/products/<id>/` | Remove a product (Returns 204). |
 
 **Create Product Payload:**
 ```json
@@ -128,18 +133,90 @@ _Requires `Bearer <admin_token>`_
 }
 ```
 
+**List Products Response:**
+```json
+[
+    {
+        "id": 1,
+        "name": "Laptop",
+        "price": "1200.00"
+    },
+    {
+        "id": 2,
+        "name": "Mouse",
+        "price": "25.00"
+    }
+]
+```
+**Update Product Response:**
+```json
+{
+    "id": 1,
+    "name": "Laptop Pro",
+    "price": "1300.00"
+}
+```
+**Delete Product:** Returns `204 No Content`.
+
 #### Customers
 | Feature | Method | Endpoint | Description |
 | :--- | :--- | :--- | :--- |
 | **List Customers** | `GET` | `/api/customers/` | View all registered customers. |
-| **Delete Customer** | `DELETE` | `/api/customers/<id>/` | Delete a customer account. |
+| **Delete Customer** | `DELETE` | `/api/customers/<id>/` | Delete a customer account (Returns 204). |
+
+**List Customers Response:**
+```json
+[
+    {
+        "id": 1,
+        "username": "customer1",
+        "email": "customer1@example.com",
+        "role": "CUSTOMER"
+    }
+]
+```
+**Delete Customer:** Returns `204 No Content`.
 
 #### Orders
 | Feature | Method | Endpoint | Description |
 | :--- | :--- | :--- | :--- |
 | **List All Orders** | `GET` | `/api/orders/` | View every order in the system. |
 | **Order Details** | `GET` | `/api/orders/<id>/` | View details of a specific order. |
-| **Delete Order** | `DELETE` | `/api/orders/<id>/` | Remove an order. |
+| **Delete Order** | `DELETE` | `/api/orders/<id>/` | Remove an order (Returns 204). |
+
+**List All Orders Response:**
+```json
+[
+    {
+        "id": 1,
+        "customer": "customer1",
+        "items": [
+            {
+                "product_id": 1,
+                "quantity": 2
+            }
+        ],
+        "total_amount": 2400.00,
+        "created_at": "2024-10-27T10:00:00Z"
+    }
+]
+```
+**Order Details Response:**
+```json
+{
+    "id": 1,
+    "customer": "customer1",
+    "items": [
+        {
+            "product_id": 1,
+            "quantity": 2
+        }
+    ],
+    "total_amount": 2400.00,
+    "created_at": "2024-10-27T10:00:00Z"
+}
+```
+**Delete Order:** Returns `204 No Content`.
 
 
 
@@ -154,12 +231,64 @@ _Requires `Bearer <customer_token>`_
 | **List Products** | `GET` | `/api/products/` | View available products. |
 | **Product Details** | `GET` | `/api/products/<id>/` | View details of a single product. |
 
+**List Products Response:**
+```json
+[
+    {
+        "id": 1,
+        "name": "Laptop",
+        "price": "1200.00"
+    }
+]
+```
+**Product Details Response:**
+```json
+{
+    "id": 1,
+    "name": "Laptop",
+    "price": "1200.00"
+}
+```
+
 #### Orders
 | Feature | Method | Endpoint | Description |
 | :--- | :--- | :--- | :--- |
 | **Place Order** | `POST` | `/api/orders/` | Submit a new order. |
 | **List My Orders** | `GET` | `/api/orders/` | View only your own orders. |
 | **Order Details** | `GET` | `/api/orders/<id>/` | View details of your own order. |
+
+**List My Orders Response:**
+```json
+[
+    {
+        "id": 1,
+        "customer": "customer1",
+        "items": [
+            {
+                "product_id": 1,
+                "quantity": 2
+            }
+        ],
+        "total_amount": 2400.00,
+        "created_at": "2024-10-27T10:00:00Z"
+    }
+]
+```
+**Order Details Response:**
+```json
+{
+    "id": 1,
+    "customer": "customer1",
+    "items": [
+        {
+            "product_id": 1,
+            "quantity": 2
+        }
+    ],
+    "total_amount": 2400.00,
+    "created_at": "2024-10-27T10:00:00Z"
+}
+```
 
 **Place Order Payload:**
 ```json
